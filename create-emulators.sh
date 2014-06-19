@@ -1,21 +1,32 @@
 #!/bin/bash
-function createavd {
-    if [ -n "$2" ]; then
-        echo "no" | android create avd -n Android-$1 -t android-$1 --abi $2 --force
-    else
-        echo "no" | android create avd -n Android-$1 -t android-$1 --force
-    fi
+
+function echoheading {
+    echo "-------------------"
+    echo " $1"
+    echo "-------------------"
+    echo 
 }
+
+function createavd {
+    echo no | android --silent create avd --name $1 --target android-$2 --abi $3 --force
+    echo 
+}
+
+function deleteavd {
+    android delete avd --name Android-$API
+    echo 
+    android delete avd --name Android-$API-x86
+    echo 
+}
+
 for ((API=8; API<=19; API++)); do
-    android delete avd -n Android-$API
-    output=$(createavd $API)
-    ret=$?
-    echo $output
-    if [ $ret -ne 0 ]; then
-        if [[ $output == *armeabi-v7a* ]]; then
-            createavd $API "armeabi-v7a"
-        elif [[ $output == *armeabi* ]]; then
-            createavd $API "armeabi"
-        fi
+    echoheading "Delete Android-$API"
+    deleteavd $API
+    echoheading "Create Android-$API"
+    if [ "$API" -lt "14" ]; then
+        createavd Android-$API $API "armeabi"
+    else
+        createavd Android-$API $API "armeabi-v7a"
     fi
+    createavd Android-$API-x86 $API "x86"
 done
