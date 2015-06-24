@@ -1,5 +1,7 @@
 #!/bin/bash
-APIS=( 8 10 13 15 16 17 18 19 )
+
+#Android Developers Dashboards
+APIS=( 10 15 16 17 18 19 21 22)
 for API in "${APIS[@]}"; do
     emulator @Android-$API -no-boot-anim &
     ret=$?

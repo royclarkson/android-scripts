@@ -4,22 +4,22 @@ function echoheading {
     echo "-------------------"
     echo " $1"
     echo "-------------------"
-    echo 
+    echo
 }
 
 function createavd {
     echo no | android --silent create avd --name $1 --target android-$2 --abi $3 --force
-    echo 
+    echo
 }
 
 function deleteavd {
     android delete avd --name Android-$API
-    echo 
+    echo
     android delete avd --name Android-$API-x86
-    echo 
+    echo
 }
 
-APIS=( 8 9 10 11 12 13 14 15 16 17 18 19 21 )
+APIS=( 10 15 16 17 18 19 21 22 )
 for API in "${APIS[@]}"; do
     echoheading "Delete Android-$API"
     deleteavd $API
