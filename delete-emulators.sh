@@ -12,9 +12,11 @@ function deleteavd {
     echo
     android delete avd --name Android-$API-x86
     echo
+    android delete avd --name Android-$API-x86_64
+    echo
 }
 
-APIS=( 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 )
+APIS=( 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 )
 for API in "${APIS[@]}"; do
     echoheading "Delete Android-$API"
     deleteavd $API
